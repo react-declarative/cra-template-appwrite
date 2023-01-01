@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Client, Account, Models, Role } from 'appwrite';
+import { Client, Account, Models } from 'appwrite';
 import { inject, singleshot } from "react-declarative";
 
 import AlertService from "./AlertService";

@@ -1,6 +1,10 @@
 import { observer } from "mobx-react-lite";
 import { AuthView, FieldType, IField } from "react-declarative";
 
+import Logo from "../../components/common/Logo";
+
+import { CC_MOCK_USER_EMAIL, CC_MOCK_USER_PASSWORD } from "../../config/params";
+
 import ioc from '../../lib/ioc';
 
 const fields: IField[] = [
@@ -49,6 +53,11 @@ export const LoginPage = observer(() => {
 
     return (
         <AuthView
+            handler={() => ({
+                email: CC_MOCK_USER_EMAIL,
+                password: CC_MOCK_USER_PASSWORD,
+            })}
+            Logo={Logo}
             fields={fields}
             onAuth={handleAuth}
         />

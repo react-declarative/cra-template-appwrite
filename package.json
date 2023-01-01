@@ -36,6 +36,7 @@
   },
   "scripts": {
     "start": "webpack-cli serve",
+    "start:proxy": "ws --config-file ./template/lws.config.js",
     "test": "rimraf test && npx create-react-app test --template=file:./",
     "msw-init": "npx msw init template/public/ --save"
   },
@@ -64,6 +65,7 @@
     "clsx": "1.2.1",
     "dayjs": "1.11.5",
     "history": "5.3.0",
+    "local-web-server": "5.2.1",
     "lodash": "4.17.21",
     "mobx": "6.6.2",
     "mobx-react": "7.5.3",
