@@ -31,51 +31,25 @@ npx create-react-app . --template=appwrite
 ## Code sample
 
 ```tsx
-import { FetchView, Breadcrumbs, One, FieldType, IField, usePreventLeave } from 'react-declarative';
+import { useState } from 'react';
+import {
+    FetchView,
+    RecordView,
+    ActionTrigger,
+    useReloadTrigger,
+    IActionTrigger,
+} from 'react-declarative';
 
-import fetchApi from '../../helpers/fetchApi';
-import history from '../../helpers/history';
+import ioc from '../../lib/ioc';
 
 interface ITodoOnePageProps {
     id: string;
 }
 
-const fields: IField[] = [
+const actions: IActionTrigger[] = [
     {
-        type: FieldType.Line,
-        title: 'System info'
-    },
-    {
-        type: FieldType.Div,
-        style: {
-          display: 'grid',
-          gridTemplateColumns: '1fr auto',
-        },
-        fields: [
-            {
-                type: FieldType.Text,
-                name: 'userId',
-                title: 'User id',
-                outlined: false,
-                disabled: true,
-            },
-            {
-                type: FieldType.Checkbox,
-                fieldBottomMargin: "0",
-                name: 'completed',
-                title: "Completed",
-                disabled: true,
-            },
-        ]
-    },
-    {
-        type: FieldType.Line,
-        title: 'Common info'
-    },
-    {
-        type: FieldType.Text,
-        name: 'title',
-        title: 'Title',
+        label: 'Mark as complete',
+        action: 'complete-action',
     }
 ];
 
@@ -83,49 +57,40 @@ export const TodoOnePage = ({
     id,
 }: ITodoOnePageProps) => {
 
-    const fetchState = async () => await fetchApi(`/api/v1/todos/${id}`);
+    const { reloadTrigger, doReload } = useReloadTrigger();
+    
+    const [search, setSearch] = useState('');
 
-    const Content = (props: any) => {
+    const state = async () => await ioc.todoDbService.findById(id);
 
-        const {
-            data,
-            oneProps,
-            beginSave,
-        } = usePreventLeave({
-            history,
-            onSave: async () => {
-                alert(JSON.stringify(data, null, 2));
-                return true; // HTTP 200
-            },
-        });
-
-        return (
-            <>
-                <Breadcrumbs
-                    withSave
-                    saveDisabled={!data}
-                    title="Todo list"
-                    subtitle={props.todo.title}
-                    onSave={beginSave}
-                    onBack={() => history.push('/todos')}
-                />
-                <One
-                    handler={() => props.todo}
-                    fields={fields}
-                    {...oneProps}
-                />
-            </>
-        );
+    const handleAction = async (action: string) => {
+        if (action === 'complete-action') {
+            await ioc.todoDbService.update(id, {
+                completed: true,
+            });
+            doReload();
+        }
     };
 
     return (
-        <FetchView state={fetchState}>
-            {(todo) => (
-                <Content todo={todo} />
-            )}
-        </FetchView>
+        <>
+            <ActionTrigger
+                actions={actions}
+                onAction={handleAction}
+            />
+            <FetchView state={state} deps={[reloadTrigger]}>
+                {(data) => (
+                    <RecordView
+                        onSearchChanged={(search) => setSearch(search)}
+                        search={search}
+                        data={data}
+                    />
+                )}
+            </FetchView>
+        </>
     );
 };
 
 export default TodoOnePage;
+
 ```

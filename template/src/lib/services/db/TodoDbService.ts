@@ -55,7 +55,7 @@ export class TodoDbService {
         );
     };
 
-    update = async (id: string, payload: ITodoDto) => {
+    update = async (id: string, payload: Partial<ITodoDto>) => {
         return await this.apiService.databases.updateDocument<ITodoDocument>(
             CC_DB_TODO_DATABASE_ID,
             CC_DB_TODO_COLLECTION_ID,
