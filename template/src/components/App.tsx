@@ -42,6 +42,11 @@ const App = observer(() => {
   const { loader, setLoader } = useLoader();
   const handleLoadStart = () => setLoader(true);
   const handleLoadEnd = () => setLoader(false);
+  const handleAction = async (action: string) => {
+    if (action === 'logout-action') {
+      await ioc.apiService.logout();
+    }
+  };
   return (
     <Scaffold
       dense
@@ -51,6 +56,7 @@ const App = observer(() => {
       Loader={Loader}
       BeforeSearch={UserInfo}
       onOptionClick={(name) => ioc.routerService.push(name)}
+      onAction={handleAction}
     >
       <Switch
         Loader={Fragment}
