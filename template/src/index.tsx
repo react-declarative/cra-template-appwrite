@@ -30,12 +30,8 @@ const tssCache = createCache({
   "key": "tss"
 });
 
-const handleGlobalError = () => {
-  ioc.routerService.push('/error-page');
-};
-
 const wrappedApp = (
-  <ErrorBoundary history={ioc.routerService} onError={handleGlobalError}>
+  <ErrorBoundary history={ioc.routerService} onError={ioc.errorService.handleGlobalError}>
     <CacheProvider value={muiCache}>
       <TssCacheProvider value={tssCache}> 
         <ThemeProvider theme={THEME_DARK}>

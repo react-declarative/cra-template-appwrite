@@ -1,4 +1,15 @@
-import { List, FieldType, ColumnType, ActionType, TypedField, IColumn, IListAction, useArrayPaginator, SelectionMode, fetchApi } from 'react-declarative';
+import { 
+    List,
+    FieldType,
+    ColumnType,
+    ActionType,
+    TypedField,
+    IColumn,
+    IListAction,
+    useArrayPaginator,
+    SelectionMode,
+} from 'react-declarative';
+import { observer } from 'mobx-react';
 
 import Delete from '@mui/icons-material/Delete';
 import Add from '@mui/icons-material/Add';
@@ -82,13 +93,14 @@ const rowActions = [
 
 const heightRequest = () => window.innerHeight - 75;
 
-export const TodoListPage = () => {
+export const TodoListPage = observer(() => {
 
     const { setLoader } = useLoader();
 
-    const handler = useArrayPaginator(async () => await fetchApi('/api/v1/todos'), {
+    const handler = useArrayPaginator(async () => await ioc.todoViewService.list(), {
         onLoadStart: () => setLoader(true),
         onLoadEnd: () => setLoader(false),
+        fallback: ioc.errorService.handleGlobalError,
     });
 
     const handleRowActionsClick = (action: string, row: any) => {
@@ -119,6 +131,6 @@ export const TodoListPage = () => {
             selectionMode={SelectionMode.Multiple}
         />
     );
-};
+});
 
 export default TodoListPage;

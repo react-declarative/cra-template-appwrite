@@ -10,11 +10,11 @@ export const sidemenu: IMenuGroup[] = [
         icon: PublicIcon,
         lifted: true,
         options: [
-            {
+            /*{
                 label: "Dashboard",
                 name: '/dashboard',
                 icon: HomeIcon,
-            },
+            },*/
             {
                 label: "Todo list",
                 name: '/todos',
