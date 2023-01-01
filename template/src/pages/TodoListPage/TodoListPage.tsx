@@ -1,10 +1,9 @@
-import { List, FieldType, ColumnType, ActionType, TypedField, IColumn, IListAction, useArrayPaginator, SelectionMode } from 'react-declarative';
+import { List, FieldType, ColumnType, ActionType, TypedField, IColumn, IListAction, useArrayPaginator, SelectionMode, fetchApi } from 'react-declarative';
 
 import Delete from '@mui/icons-material/Delete';
 import Add from '@mui/icons-material/Add';
 
-import fetchApi from '../../helpers/fetchApi';
-import history from '../../helpers/history';
+import ioc from '../../lib/ioc';
 
 import useLoader from '../../hooks/useLoader';
 
@@ -101,7 +100,7 @@ export const TodoListPage = () => {
     };
 
     const handleClick = (row: any) => {
-        history.push(`/todos/${row.id}`);
+        ioc.routerService.push(`/todos/${row.id}`);
     };
 
     return (

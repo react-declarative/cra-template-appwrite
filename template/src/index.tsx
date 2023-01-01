@@ -8,22 +8,16 @@ import createCache from "@emotion/cache";
 
 import { ModalProvider } from "react-declarative";
 import { ErrorBoundary } from "react-declarative";
-import { SnackbarProvider } from "notistack";
 import { LoaderProvider } from "./hooks/useLoader";
 
 import "./polyfills";
 
 import App from "./components/App";
-
-import worker from "./mocks";
+import AlertProvider from "./components/AlertProvider";
 
 import THEME_DARK from "./config/theme";
 
-import history, { handleGlobalError } from './helpers/history';
-
-// if (isDevelopment()) {
-worker.start();
-// }
+import ioc from './lib/ioc';
 
 const container = document.getElementById('root')!;
 
@@ -36,17 +30,21 @@ const tssCache = createCache({
   "key": "tss"
 });
 
+const handleGlobalError = () => {
+  ioc.routerService.push('/error-page');
+};
+
 const wrappedApp = (
-  <ErrorBoundary history={history} onError={handleGlobalError}>
+  <ErrorBoundary history={ioc.routerService} onError={handleGlobalError}>
     <CacheProvider value={muiCache}>
       <TssCacheProvider value={tssCache}> 
         <ThemeProvider theme={THEME_DARK}>
           <ModalProvider>
-            <SnackbarProvider>
+            <AlertProvider>
               <LoaderProvider>
                 <App />
               </LoaderProvider>
-            </SnackbarProvider>
+            </AlertProvider>
           </ModalProvider>
         </ThemeProvider>
       </TssCacheProvider>

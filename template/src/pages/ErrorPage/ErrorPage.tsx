@@ -1,10 +1,10 @@
 import { ErrorView } from "react-declarative";
 
-import { CC_APP_NAME } from "../../config/params";
+import Logo from "../../components/common/Logo";
 
 export const ErrorPage = () => (
     <ErrorView
-        appName={CC_APP_NAME}
+        Logo={Logo}
     />
 );
 

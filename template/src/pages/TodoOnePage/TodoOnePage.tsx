@@ -1,7 +1,6 @@
-import { FetchView, Breadcrumbs, One, FieldType, TypedField, usePreventLeave } from 'react-declarative';
+import { FetchView, Breadcrumbs, One, FieldType, TypedField, usePreventLeave, fetchApi } from 'react-declarative';
 
-import fetchApi from '../../helpers/fetchApi';
-import history from '../../helpers/history';
+import ioc from '../../lib/ioc';
 
 interface ITodoOnePageProps {
     id: string;
@@ -68,7 +67,7 @@ export const TodoOnePage = ({
             oneProps,
             beginSave,
         } = usePreventLeave({
-            history,
+            history: ioc.routerService,
             onSave: () => {
                 alert(JSON.stringify(data, null, 2));
                 return true;
@@ -82,7 +81,7 @@ export const TodoOnePage = ({
                     title="Todo list"
                     subtitle={props.todo.title}
                     onSave={beginSave}
-                    onBack={() => history.push('/todos')}
+                    onBack={() => ioc.routerService.push('/todos')}
                     saveDisabled={!data}
                 />
                 <One<ITodoItem>

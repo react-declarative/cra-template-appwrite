@@ -1,19 +1,25 @@
 import { ISwitchItem } from 'react-declarative';
 
-import DashboardPage from '../pages/DashboardPage';
 import TodoListPage from '../pages/TodoListPage';
 import TodoOnePage from '../pages/TodoOnePage';
 
 import ErrorPage from '../pages/ErrorPage';
+import LoginPage from '../pages/LoginPage';
+
+import ioc from '../lib/ioc';
 
 export const routes: ISwitchItem[] = [
   {
     path: '/',
-    redirect: '/dashboard'
-  },
-  {
-    path: '/dashboard',
-    element: DashboardPage,
+    prefetch: async () => {
+      await ioc.apiService.prefetch();
+    },
+    redirect: () => {
+      if (ioc.apiService.isAuthorized) {
+        return "/todos";
+      }
+      return "/login-page";
+    },
   },
   {
     path: '/todos',
@@ -26,6 +32,10 @@ export const routes: ISwitchItem[] = [
   {
     path: '/error-page',
     element: ErrorPage,
+  },
+  {
+    path: '/login-page',
+    element: LoginPage,
   },
   {
     path: '/unauthorized-page',

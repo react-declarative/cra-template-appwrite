@@ -1,8 +1,5 @@
 {
     "package": {
-      "scripts": {
-        "msw-init": "npx msw init public/ --save"
-      },
       "devDependencies": {
         "@types/uuid": "8.3.4",
         "@types/node": "16.11.51",
@@ -26,12 +23,11 @@
         "react-declarative": "2.2.4",
         "resize-observer-polyfill": "1.5.1",
         "react-window": "1.8.7",
-        "node-appwrite": "8.2.0",
+        "appwrite": "10.2.0",
         "mobx": "6.6.2",
         "mobx-react": "7.5.3",
         "uuid": "9.0.0",
-        "msw": "0.47.3",
-        "notistack": "2.0.5",
+        "lodash": "4.17.21",
         "clsx": "1.2.1"
       },
       "eslintConfig": {

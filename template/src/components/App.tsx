@@ -7,13 +7,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import UserInfo from "./common/UserInfo";
 
-import history from "../helpers/history";
-
 import useLoader from "../hooks/useLoader";
 
 import routes from "../config/routes";
 import sidemenu from "../config/sidemenu";
 import scaffoldmenu from "../config/scaffoldmenu";
+
+import ioc from "../lib/ioc";
 
 const Loader = () => (
   <Box
@@ -43,8 +43,6 @@ const App = observer(() => {
   const handleLoadStart = () => setLoader(true);
   const handleLoadEnd = () => setLoader(false);
   return (
-    // TODO: <Scaffold payload={currentUser.id}
-    //                 ^^^^^^^^^^^^^^^^^^^^^^^^
     <Scaffold
       dense
       loaderLine={loader}
@@ -52,11 +50,11 @@ const App = observer(() => {
       actions={scaffoldmenu}
       Loader={Loader}
       BeforeSearch={UserInfo}
-      onOptionClick={(name) => history.push(name)}
+      onOptionClick={(name) => ioc.routerService.push(name)}
     >
       <Switch
         Loader={Fragment}
-        history={history}
+        history={ioc.routerService}
         items={routes}
         onLoadStart={handleLoadStart}
         onLoadEnd={handleLoadEnd}
