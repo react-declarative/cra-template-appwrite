@@ -1,6 +1,6 @@
 # ⚛️ cra-template-appwrite
 
-> Contains the most advanced `todo-list` which you ever seen!
+> Contains the most advanced appwrite starter kit which you ever seen!
 
 [![npm](https://img.shields.io/npm/v/cra-template-appwrite.svg?style=flat-square)](https://npmjs.org/package/cra-template-appwrite)
 
@@ -26,7 +26,8 @@ npx create-react-app . --template=appwrite
 4. [MSW](https://mswjs.io/)
 5. [tss-react](https://www.tss-react.dev/)
 6. [react-declarative](https://www.npmjs.com/package/react-declarative)
-7. [node-appwrite](https://www.npmjs.com/package/node-appwrite)
+7. [appwrite](https://www.npmjs.com/package/appwrite)
+8. [local-web-server](https://www.npmjs.com/package/local-web-server)
 
 ## Code sample
 

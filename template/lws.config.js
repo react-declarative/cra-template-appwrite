@@ -2,7 +2,7 @@ module.exports = {
   rewrite: [
     {
       from: '/(.*)',
-      to: 'https://8080-appwrite-integrationfor-onrw45m2dan.ws-eu80.gitpod.io/$1',
+      to: 'https://8080-appwrite-integrationfor-7cc0ys19d0b.ws-eu80.gitpod.io/$1',
       //   ^^^^^^^^ using https is important
       // @see https://github.com/appwrite/appwrite/issues/1082
     },
