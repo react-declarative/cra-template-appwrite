@@ -5,9 +5,12 @@ import {
     ActionType,
     TypedField,
     IColumn,
+    IField,
     IListAction,
     useArrayPaginator,
     SelectionMode,
+    useActionModal,
+    useSubject,
 } from 'react-declarative';
 import { observer } from 'mobx-react';
 
@@ -37,14 +40,14 @@ const columns: IColumn[] = [
         field: 'id',
         headerName: 'ID',
         secondary: true,
-        width: () => 50,
+        width: () => 150,
     },
     {
         type: ColumnType.Text,
         headerName: 'Title',
         primary: true,
         field: 'title',
-        width: (fullWidth) => Math.max(fullWidth - 350, 200),
+        width: (fullWidth) => Math.max(fullWidth - 450, 200),
     },
     {
         type: ColumnType.CheckBox,
@@ -91,11 +94,47 @@ const rowActions = [
     },
 ];
 
+const createFields: IField[] = [
+    {
+        type: FieldType.Text,
+        name: 'title',
+        title: 'Title',
+    }
+];
+
 const heightRequest = () => window.innerHeight - 75;
 
 export const TodoListPage = observer(() => {
 
     const { setLoader } = useLoader();
+
+    const reloadSubject = useSubject<void>();
+
+    const handleCreate = async (data: { title: string; } | null) => {
+        if (!data) {
+            return true;
+        }
+        try {
+            await ioc.todoViewService.create(data.title);
+            reloadSubject.next();
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
+    const {
+        pickData,
+        render,
+    } = useActionModal({
+        title: 'Todo creation',
+        fields: createFields,
+        handler: () => ({
+            title: 'Another boring todo item',
+        }),
+        onSubmit: handleCreate,
+        fallback: ioc.errorService.handleGlobalError,
+    });
 
     const handler = useArrayPaginator(async () => await ioc.todoViewService.list(), {
         onLoadStart: () => setLoader(true),
@@ -108,7 +147,9 @@ export const TodoListPage = observer(() => {
     };
 
     const handleAction = (action: string) => {
-        alert(action);
+        if (action === 'add-action') {
+            pickData();
+        }
     };
 
     const handleClick = (row: any) => {
@@ -116,20 +157,24 @@ export const TodoListPage = observer(() => {
     };
 
     return (
-        <List
-            title="Todo list"
-            filterLabel="Filters"
-            heightRequest={heightRequest}
-            rowActions={rowActions}
-            actions={actions}
-            filters={filters}
-            columns={columns}
-            handler={handler}
-            onRowAction={handleRowActionsClick}
-            onRowClick={handleClick}
-            onAction={handleAction}
-            selectionMode={SelectionMode.Multiple}
-        />
+        <>
+            <List
+                title="Todo list"
+                filterLabel="Filters"
+                heightRequest={heightRequest}
+                rowActions={rowActions}
+                actions={actions}
+                filters={filters}
+                columns={columns}
+                handler={handler}
+                onRowAction={handleRowActionsClick}
+                onRowClick={handleClick}
+                onAction={handleAction}
+                reloadSubject={reloadSubject}
+                selectionMode={SelectionMode.Multiple}
+            />
+            {render()}
+        </>
     );
 });
 

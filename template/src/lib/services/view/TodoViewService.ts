@@ -15,10 +15,10 @@ export class TodoViewService {
         makeAutoObservable(this);
     };
 
-    create = async ({ title, completed }: { title: string; completed: boolean; }) => {
+    create = async (title: string) => {
         const result = await this.todoDbService.create({
             userId: this.apiService.session.userId,
-            completed,
+            completed: false,
             title,
         });
         return {
