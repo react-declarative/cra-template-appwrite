@@ -1,6 +1,6 @@
 {
   "name": "cra-template-appwrite",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "The most advanced CRM Boilerplate for React + AppWrite. Contains snippets for automatic state management in a declarative style",
   "keywords": [
     "react",
