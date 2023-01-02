@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { inject } from "react-declarative";
 
-import TodoDbService, { ITodoDto } from "../db/TodoDbService";
+import TodoDbService from "../db/TodoDbService";
 import ApiService from "../base/ApiService";
 
 import TYPES from "../../types";
