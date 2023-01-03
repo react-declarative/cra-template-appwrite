@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 
-import { Switch, Scaffold } from "react-declarative";
+import { Switch, Scaffold, serviceManager } from "react-declarative";
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -47,6 +47,12 @@ const App = observer(() => {
       await ioc.apiService.logout();
     }
   };
+  const handleInit = async () => {
+    await serviceManager.prefetch(true);
+  };
+  const handleDispose = async () => {
+    await serviceManager.unload(true);
+  };
   return (
     <Scaffold
       dense
@@ -64,6 +70,8 @@ const App = observer(() => {
         items={routes}
         onLoadStart={handleLoadStart}
         onLoadEnd={handleLoadEnd}
+        onInit={handleInit}
+        onDispose={handleDispose}
       />
     </Scaffold>
   );
