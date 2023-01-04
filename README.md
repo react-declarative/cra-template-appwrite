@@ -23,11 +23,10 @@ npx create-react-app . --template=appwrite
 1. [TypeScript](https://www.typescriptlang.org/)
 2. [MUI](https://mui.com/)
 3. [Mobx](https://mobx.js.org/)
-4. [MSW](https://mswjs.io/)
-5. [tss-react](https://www.tss-react.dev/)
-6. [react-declarative](https://www.npmjs.com/package/react-declarative)
-7. [appwrite](https://www.npmjs.com/package/appwrite)
-8. [local-web-server](https://www.npmjs.com/package/local-web-server)
+4. [tss-react](https://www.tss-react.dev/)
+5. [react-declarative](https://www.npmjs.com/package/react-declarative)
+6. [appwrite](https://www.npmjs.com/package/appwrite)
+7. [local-web-server](https://www.npmjs.com/package/local-web-server)
 
 ## Code sample
 
