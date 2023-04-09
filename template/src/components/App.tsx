@@ -56,7 +56,7 @@ const App = observer(() => {
   return (
     <Scaffold
       dense
-      loaderLine={loader}
+      loadingLine={loader}
       options={sidemenu}
       actions={scaffoldmenu}
       Loader={Loader}
